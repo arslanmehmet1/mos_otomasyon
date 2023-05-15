@@ -2,8 +2,8 @@
 const upTable = document.getElementById("machineUpTable");
 
 //? Machine Selectors
-const editMachine = document.querySelector(".editMachine");
-const delMachine = document.querySelector(".delMachine");
+// const editMachine = document.querySelector(".editMachine");
+// const delMachine = document.querySelector(".delMachine");
 
 const machineTable = document.querySelector(".machine-table-body");
 const machineModalDropdown = document.querySelector(".machineModalDropdown");
@@ -11,6 +11,7 @@ const addMachineModalBtn = document.querySelector(".addMachineModalBtn");
 const machineModalNameInput = document.getElementById("machineModalName");
 const machineModalDescInput = document.getElementById("MachineModalDesc");
 const machineModalCloseBtn = document.getElementById("MachineModalCloseBtn");
+const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
 const addProduct = document.querySelector(".addProduct");
@@ -29,7 +30,6 @@ const machineUpGroup = {
   1: "Landing",
   2: "Marine",
   3: "Aircraft",
-  4: "newone",
 };
 const productUpGroup = { 1: "Seat", 2: "Tire" };
 
@@ -43,10 +43,19 @@ const getDataMachine = async () => {
     <td>${machine_desc}</td>
     <td>${machineUpGroup[group_id]}</td>
     <td>
-      <button type="button" class="btn btn-secondary editMachine">
-        Edit
-      </button>
-      <button type="button" class="btn btn-danger delMachine">
+
+    <button
+    type="button"
+    class="btn btn-secondary  "
+    data-bs-toggle="modal"
+    data-bs-target="#editMachineModal"
+    onclick="editMachine(${id},${group_id},'${machine_name}','${machine_desc}')"
+  >
+  Edit
+  </button>
+
+    
+      <button type="button" class="btn btn-danger delMachine" onclick="deleteMachine(${id})">
         Delete
       </button>
     </td>
@@ -64,7 +73,7 @@ for (const [key, value] of Object.entries(machineUpGroup)) {
   <td>${value}</td>
 </tr>`;
 }
-
+let selectedMachineId;
 addMachineModalBtn.addEventListener("click", () => {
   for (const [key, value] of Object.keys(machineUpGroup)) {
     if (machineUpGroup[key] == machineModalDropdown.value) {
@@ -107,13 +116,17 @@ machineTable.addEventListener("click", (e) => {
   }
 });
 
-// const deleteMachine = async () => {
-//   try {
-//     await axios.delete(`${machineUrl}/2`);
-//     // await axios.delete(`${machineUrl}/${id}`);
-//   } catch (error) {
-//     console.log(error);
-//   }
+const deleteMachine = async (id) => {
+  try {
+    await axios.delete(`${machineUrl}/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
 
-//   getDataMachine();
-// };
+  getDataMachine();
+};
+
+const editMachine = (id, group_id, machine_name, machine_desc) => {
+  selectedMachineId = id;
+  selectedMachineNameInput.value = machine_name;
+};
