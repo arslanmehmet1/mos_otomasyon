@@ -11,59 +11,232 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="p-5">
-      <div class="row bg-body-secondary">
-        <div class="col-md-3 text-center">
+    <header class="my-5">
+      <div class="d-flex justify-content-center align-items-center bg-light">
+        <div class="text-center">
           <img
             src="https://www.mosyazilim.com/Scripts/images/mos_logo_4.png"
             alt="mos_logo"
             class="object-fit-fill"
-            width="250px"
+            width="200px"
           />
         </div>
-        <div class="col-md-9 text-center my-auto fs-1">
-          Product Control Program
-        </div>
+        <div class="fs-3 mx-5">Product Control Program</div>
       </div>
     </header>
-    <section class="upperGroup p-5">
+    <section class="upperGroup p-5 w-75 m-auto">
       <div class="row">
         <div class="col-md-6">
-          <table class="table table-striped border text-center">
-            <thead>
+          <table class="table table-striped border text-center table-hover">
+            <thead class="table-secondary">
               <tr>
-                <th scope="col">Machine Upper Group Id</th>
-                <th scope="col">Machine Upper Group Name</th>
+                <th scope="col">Machine Categories</th>
+              </tr>
+            </thead>
+            <tbody id="machineUpTable"></tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-striped border text-center table-hover">
+            <thead class="table-secondary">
+              <tr>
+                <th scope="col">Product Categories</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">1</th>
-                <td>Landing</td>
+                <td>Seat</td>
               </tr>
               <tr>
-                <th scope="row">2</th>
-                <td>Marine</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Aircraft</td>
+                <td>Tire</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="col-md-6"></div>
       </div>
     </section>
     <main>
-      <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col-md-6"></div>
+      <div class="row m-5">
+        <div class="col-md-6 text-center">
+          <p class="bg-light fs-2">Machines</p>
+          <p
+            type="button"
+            class="fs-5 bg-warning-subtle btn addMachine"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Add New Machine
+          </p>
+          <!-- Modal start here -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Add New Machine
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <!-- modal body start here -->
+                  <select
+                    class="form-select machineModalDropdown mb-3"
+                    aria-label="Default select example"
+                  >
+                    <option disabled>Machine Group Name</option>
+                    <option value="1">One</option>
+                  </select>
+                  <input
+                    type="text"
+                    class="form-control"
+                    aria-label="Text input with dropdown button"
+                    placeholder="Machine Name"
+                    id="machineModalName"
+                    required
+                  />
+                  <div class="input-group mt-3">
+                    <span class="input-group-text">Machine Description</span>
+                    <textarea
+                      class="form-control"
+                      aria-label="With textarea"
+                      id="MachineModalDesc"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- modal body END here -->
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    id="MachineModalCloseBtn"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary addMachineModalBtn"
+                  >
+                    Add Machine
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal END here -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Machine Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Group Name</th>
+                <th scope="col">Operation</th>
+              </tr>
+            </thead>
+            <tbody class="machine-table-body">
+              <tr>
+                <td>Lorem ipsum</td>
+                <td>Lorem ipsum dolor sit amet consectetur</td>
+                <td>@mdo</td>
+                <td>
+                  <button type="button" class="btn btn-secondary editMachine">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger delMachine"
+                    id="delMachineBtn"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 text-center">
+          <p class="bg-light fs-2">Products</p>
+          <p class="fs-5 bg-warning-subtle btn addProduct">Add New Products</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Products Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Group Name</th>
+                <th scope="col">Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>
+                  <button type="button" class="btn btn-secondary editProduct">
+                    Edit
+                  </button>
+                  <button type="button" class="btn btn-danger delProduct">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="result"></div>
+      <div class="result w-50 m-auto">
+        <div class="text-center">
+          <p class="bg-light fs-2">Product Quantity</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Machine Name</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantitiy</th>
+                <th scope="col">Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-secondary changeQuantity"
+                  >
+                    Change Quantity
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
