@@ -7,9 +7,13 @@ const upTable = document.getElementById("machineUpTable");
 
 const machineTable = document.querySelector(".machine-table-body");
 const machineModalDropdown = document.querySelector(".machineModalDropdown");
+const machineEditModalDropdown = document.querySelector(
+  ".machineEditModalDropdown"
+);
 const addMachineModalBtn = document.querySelector(".addMachineModalBtn");
 const machineModalNameInput = document.getElementById("machineModalName");
 const machineModalDescInput = document.getElementById("MachineModalDesc");
+const MachineModalEditDesc = document.getElementById("MachineModalEditDesc");
 const machineModalCloseBtn = document.getElementById("MachineModalCloseBtn");
 const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
@@ -33,47 +37,47 @@ const machineUpGroup = {
 };
 const productUpGroup = { 1: "Seat", 2: "Tire" };
 
+//! Category Table Create and Modal dropdown menu create
+machineModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+machineEditModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+
+for (const [key, value] of Object.entries(machineUpGroup)) {
+  machineModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  machineEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  upTable.innerHTML += `<tr>
+                            <td>${value}</td>
+                        </tr>`;
+}
+
+//! GET DATA FROM API AND CREATE MACHINE TABLE
 const getDataMachine = async () => {
   const { data } = await axios(machineUrl);
   machineTable.innerHTML = ``;
   data.map((item) => {
     const { group_id, machine_name, machine_desc, id } = item;
     machineTable.innerHTML += `<tr>
-    <td>${machine_name}</td>
-    <td>${machine_desc}</td>
-    <td>${machineUpGroup[group_id]}</td>
-    <td>
+                <td>${machine_name}</td>
+                <td>${machine_desc}</td>
+                <td>${machineUpGroup[group_id]}</td>
+                <td>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                     data-bs-target="#editMachineModal"
+                     onclick="editMachine(${id},${group_id},'${machine_name}','${machine_desc}')">
+                     Edit </button>
 
-    <button
-    type="button"
-    class="btn btn-secondary  "
-    data-bs-toggle="modal"
-    data-bs-target="#editMachineModal"
-    onclick="editMachine(${id},${group_id},'${machine_name}','${machine_desc}')"
-  >
-  Edit
-  </button>
-
-    
-      <button type="button" class="btn btn-danger delMachine" onclick="deleteMachine(${id})">
-        Delete
-      </button>
-    </td>
-  </tr>`;
+                     <button type="button" class="btn btn-danger delMachine" onclick="deleteMachine(${id})">
+                      Delete </button>
+                </td>
+              </tr>`;
   });
 
   console.log(data);
 };
 getDataMachine();
 
-machineModalDropdown.innerHTML = `<option disabled selected>Machine Group Name</option>`;
-for (const [key, value] of Object.entries(machineUpGroup)) {
-  machineModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
-  upTable.innerHTML += `<tr>
-  <td>${value}</td>
-</tr>`;
-}
 let selectedMachineId;
+
+//! GET NEW MACHINE DATA FROM MODAL AND CALL CREATE FUNCTION
 addMachineModalBtn.addEventListener("click", () => {
   for (const [key, value] of Object.keys(machineUpGroup)) {
     if (machineUpGroup[key] == machineModalDropdown.value) {
@@ -94,13 +98,14 @@ addMachineModalBtn.addEventListener("click", () => {
     postNewMachine(newMachine);
     machineModalNameInput.value = "";
     machineModalDescInput.value = "";
-    machineModalDropdown.value = "Machine Group Name";
+    machineModalDropdown.value = "Machine Category";
   }
 
   console.log(machineModalNameInput.value);
   console.log(newMachine);
 });
 
+//! CREATE FUNCTION FROM API
 const postNewMachine = async (newMachine) => {
   try {
     await axios.post(machineUrl, newMachine);
@@ -111,11 +116,7 @@ const postNewMachine = async (newMachine) => {
   getDataMachine();
 };
 
-machineTable.addEventListener("click", (e) => {
-  if (e.target.classList.contains("delMachine")) {
-  }
-});
-
+//! DELETE FUNCTION FROM API
 const deleteMachine = async (id) => {
   try {
     await axios.delete(`${machineUrl}/${id}`);
@@ -129,4 +130,6 @@ const deleteMachine = async (id) => {
 const editMachine = (id, group_id, machine_name, machine_desc) => {
   selectedMachineId = id;
   selectedMachineNameInput.value = machine_name;
+  machineEditModalDropdown.value = machineUpGroup[group_id];
+  MachineModalEditDesc.value = machine_desc;
 };
