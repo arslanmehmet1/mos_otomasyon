@@ -143,6 +143,34 @@ addMachineModalBtn.addEventListener("click", () => {
   console.log(newMachine);
 });
 
+//! GET NEW PRODUCT DATA FROM ADD MODAL AND CALL CREATE FUNCTION
+// addMachineModalBtn.addEventListener("click", () => {
+//   for (const [key, value] of Object.keys(machineUpGroup)) {
+//     if (machineUpGroup[key] == machineModalDropdown.value) {
+//       group_id = key;
+//     }
+//   }
+//   const newMachine = {
+//     group_id,
+//     machine_name: machineModalNameInput.value,
+//     machine_desc: machineModalDescInput.value,
+//   };
+
+//   if (machineModalNameInput.value == "") {
+//     alert("Machine name is required");
+//   } else if (machineModalDescInput.value == "") {
+//     alert("Machine description is required");
+//   } else {
+//     postNewMachine(newMachine);
+//     machineModalNameInput.value = "";
+//     machineModalDescInput.value = "";
+//     machineModalDropdown.value = "Machine Category";
+//   }
+
+//   console.log(machineModalNameInput.value);
+//   console.log(newMachine);
+// });
+
 //! CREATE FUNCTION FROM API
 const postNewMachine = async (newMachine) => {
   try {
