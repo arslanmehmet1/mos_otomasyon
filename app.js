@@ -205,7 +205,7 @@ const postNewProduct = async (newProduct) => {
   getDataProduct();
 };
 
-//! DELETE FUNCTION FROM API
+//! MACHINE DELETE FUNCTION FROM API
 const deleteMachine = async (id) => {
   try {
     await axios.delete(`${machineUrl}/${id}`);
@@ -214,6 +214,17 @@ const deleteMachine = async (id) => {
   }
 
   getDataMachine();
+};
+
+//! PRODUCT DELETE FUNCTION FROM API
+const deleteProduct = async (id) => {
+  try {
+    await axios.delete(`${productUrl}/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  getDataProduct();
 };
 
 let selectedMachineId;
@@ -239,7 +250,7 @@ editMachineModalBtn.addEventListener("click", () => {
   putSelectedMachine(edittedMachine, selectedMachineId);
 });
 
-//! PUT FUNCTION FROM API
+//! MACHINE PUT FUNCTION FROM API
 const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
   try {
     await axios.put(`${machineUrl}/${selectedMachineId}`, edittedMachine);
@@ -249,3 +260,14 @@ const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
   MachineEditModalCloseBtn.click();
   getDataMachine();
 };
+
+//! PRODUCT PUT FUNCTION FROM API
+// const putSelectedProduct = async (edittedProduct, selectedProductId) => {
+//   try {
+//     await axios.put(`${productUrl}/${selectedProductId}`, edittedProduct);
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   ProductEditModalCloseBtn.click();
+//   getDataProduct();
+// };
