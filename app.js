@@ -22,12 +22,8 @@ const MachineEditModalCloseBtn = document.getElementById(
 const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
-const addProduct = document.querySelector(".addProduct");
-const editProduct = document.querySelector(".editProduct");
-const delProduct = document.querySelector(".delProduct");
 
 //? Quantitiy Selectors
-const changeQuantity = document.querySelector(".changeQuantity");
 
 //? AxiosUrl
 const machineUrl = "https://645e8a578d081002930218bc.mockapi.io/api/machines";
@@ -79,7 +75,7 @@ const getDataMachine = async () => {
 };
 getDataMachine();
 
-//! GET NEW MACHINE DATA FROM MODAL AND CALL CREATE FUNCTION
+//! GET NEW MACHINE DATA FROM ADD MODAL AND CALL CREATE FUNCTION
 addMachineModalBtn.addEventListener("click", () => {
   for (const [key, value] of Object.keys(machineUpGroup)) {
     if (machineUpGroup[key] == machineModalDropdown.value) {
