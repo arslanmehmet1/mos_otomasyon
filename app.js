@@ -23,9 +23,21 @@ const MachineEditModalCloseBtn = document.getElementById(
 const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
-// const ProductUpTable = document.querySelector(".machine-table-body");
 const productTable = document.querySelector(".productTable");
 const productModalDropdown = document.querySelector(".productModalDropdown");
+const productEditModalDropdown = document.querySelector(
+  ".productEditModalDropdown"
+);
+const addProductModalBtn = document.querySelector(".addProductModalBtn");
+const editProductModalBtn = document.querySelector(".editProductModalBtn");
+const productModalNameInput = document.getElementById("productModalName");
+const productModalDescInput = document.getElementById("ProductModalDesc");
+const ProductModalEditDesc = document.getElementById("ProductModalEditDesc");
+const productModalCloseBtn = document.getElementById("ProductModalCloseBtn");
+const ProductEditModalCloseBtn = document.getElementById(
+  "ProductEditModalCloseBtn"
+);
+const selectedProductNameInput = document.getElementById("selectedProductName");
 
 //? Quantitiy Selectors
 
@@ -140,39 +152,38 @@ addMachineModalBtn.addEventListener("click", () => {
     machineModalDropdown.value = "Machine Category";
   }
 
-  console.log(machineModalNameInput.value);
   console.log(newMachine);
 });
 
 //! GET NEW PRODUCT DATA FROM ADD MODAL AND CALL CREATE FUNCTION
-// addMachineModalBtn.addEventListener("click", () => {
-//   for (const [key, value] of Object.keys(machineUpGroup)) {
-//     if (machineUpGroup[key] == machineModalDropdown.value) {
-//       group_id = key;
-//     }
-//   }
-//   const newMachine = {
-//     group_id,
-//     machine_name: machineModalNameInput.value,
-//     machine_desc: machineModalDescInput.value,
-//   };
+addProductModalBtn.addEventListener("click", () => {
+  for (const [key, value] of Object.keys(productUpGroup)) {
+    if (productUpGroup[key] == productModalDropdown.value) {
+      group_id = key;
+    }
+  }
+  const newProduct = {
+    group_id,
+    product_name: productModalNameInput.value,
+    product_desc: productModalDescInput.value,
+  };
 
-//   if (machineModalNameInput.value == "") {
-//     alert("Machine name is required");
-//   } else if (machineModalDescInput.value == "") {
-//     alert("Machine description is required");
-//   } else {
-//     postNewMachine(newMachine);
-//     machineModalNameInput.value = "";
-//     machineModalDescInput.value = "";
-//     machineModalDropdown.value = "Machine Category";
-//   }
+  if (productModalNameInput.value == "") {
+    alert("Product name is required");
+  } else if (productModalDescInput.value == "") {
+    alert("Product description is required");
+  } else {
+    console.log(newProduct);
+    postNewProduct(newProduct);
+    productModalNameInput.value = "";
+    productModalDescInput.value = "";
+    productModalDropdown.value = "Product Category";
+  }
 
-//   console.log(machineModalNameInput.value);
-//   console.log(newMachine);
-// });
+  console.log(productModalNameInput.value);
+});
 
-//! CREATE FUNCTION FROM API
+//! MACHINE CREATE FUNCTION FROM API
 const postNewMachine = async (newMachine) => {
   try {
     await axios.post(machineUrl, newMachine);
@@ -181,6 +192,17 @@ const postNewMachine = async (newMachine) => {
   }
   machineModalCloseBtn.click();
   getDataMachine();
+};
+
+//! PRODUCT CREATE FUNCTION FROM API
+const postNewProduct = async (newProduct) => {
+  try {
+    await axios.post(productUrl, newProduct);
+  } catch (error) {
+    console.log(error);
+  }
+  productModalCloseBtn.click();
+  getDataProduct();
 };
 
 //! DELETE FUNCTION FROM API
