@@ -25,6 +25,7 @@ const selectedMachineNameInput = document.getElementById("selectedMachineName");
 //? Product Selectors
 // const ProductUpTable = document.querySelector(".machine-table-body");
 const productTable = document.querySelector(".productTable");
+const productModalDropdown = document.querySelector(".productModalDropdown");
 
 //? Quantitiy Selectors
 
@@ -52,11 +53,11 @@ for (const [key, value] of Object.entries(machineUpGroup)) {
                         </tr>`;
 }
 //! Product Category Table Create and Modal dropdown menu create
-// machineModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+productModalDropdown.innerHTML = `<option disabled selected>Product Category</option>`;
 // machineEditModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
 
 for (const [key, value] of Object.entries(productUpGroup)) {
-  //   machineModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  productModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
   //   machineEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
   ProductUpTable.innerHTML += `<tr>
                             <td>${value}</td>
