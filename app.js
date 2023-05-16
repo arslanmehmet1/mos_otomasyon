@@ -24,6 +24,7 @@ const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
 // const ProductUpTable = document.querySelector(".machine-table-body");
+const productTable = document.querySelector(".productTable");
 
 //? Quantitiy Selectors
 
@@ -62,7 +63,7 @@ for (const [key, value] of Object.entries(productUpGroup)) {
                         </tr>`;
 }
 
-//! GET DATA FROM API AND CREATE MACHINE TABLE
+//!  MACHINE GET DATA FROM  MACHINE API AND CREATE MACHINE TABLE
 const getDataMachine = async () => {
   const { data } = await axios(machineUrl);
   machineTable.innerHTML = ``;
@@ -87,6 +88,32 @@ const getDataMachine = async () => {
   console.log(data);
 };
 getDataMachine();
+
+//! PRODUCT  GET DATA FROM PRODUCT API AND CREATE MACHINE TABLE
+const getDataProduct = async () => {
+  const { data } = await axios(productUrl);
+  productTable.innerHTML = ``;
+  data.map((item) => {
+    const { group_id, product_name, product_desc, id } = item;
+    productTable.innerHTML += `<tr>
+                <td>${product_name}</td>
+                <td>${product_desc}</td>
+                <td>${productUpGroup[group_id]}</td>
+                <td>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                     data-bs-target="#editProductModal"
+                     onclick="editProduct(${id},${group_id},'${product_name}','${product_desc}')">
+                     Edit </button>
+
+                     <button type="button" class="btn btn-danger delProduct" onclick="deleteProduct(${id})">
+                      Delete </button>
+                </td>
+              </tr>`;
+  });
+
+  console.log(data);
+};
+getDataProduct();
 
 //! GET NEW MACHINE DATA FROM ADD MODAL AND CALL CREATE FUNCTION
 addMachineModalBtn.addEventListener("click", () => {
