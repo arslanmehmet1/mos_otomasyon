@@ -90,17 +90,17 @@ quantityModalDropdownMachine.innerHTML = `<option disabled selected>Machine Name
 quantityModalDropdownProduct.innerHTML = `<option disabled selected>Product Name</option>`;
 
 //! Global variable
-// let machineNames = [];
-// let productNames = [];
+let machineNames = [];
+let productNames = [];
 
 //!  MACHINE GET DATA FROM  MACHINE API AND CREATE MACHINE TABLE
 const getDataMachine = async () => {
   const { data } = await axios(machineUrl);
-  // machineNames = [];
+  machineNames = [];
   machineTable.innerHTML = ``;
   data.map((item) => {
     const { group_id, machine_name, machine_desc, id } = item;
-    // machineNames.push(item.machine_name);
+    machineNames.push(`${item.machine_name}`);
     machineTable.innerHTML += `<tr>
                 <td>${machine_name}</td>
                 <td>${machine_desc}</td>
@@ -116,19 +116,19 @@ const getDataMachine = async () => {
                 </td>
               </tr>`;
   });
-
-  console.log(data);
+  quantityModalMachineDrop(machineNames); //quantity add modal machine name dropdown menu
+  console.log(machineNames);
 };
 getDataMachine();
 
 //! PRODUCT  GET DATA FROM PRODUCT API AND CREATE MACHINE TABLE
 const getDataProduct = async () => {
   const { data } = await axios(productUrl);
-  // productNames = [];
+  productNames = [];
   productTable.innerHTML = ``;
   data.map((item) => {
     const { group_id, product_name, product_desc, id } = item;
-    // productNames.push(item.product_name);
+    productNames.push(`${item.product_name}`);
     productTable.innerHTML += `<tr>
                 <td>${product_name}</td>
                 <td>${product_desc}</td>
@@ -144,7 +144,7 @@ const getDataProduct = async () => {
                 </td>
               </tr>`;
   });
-
+  quantityModalProductDrop(productNames); //quantity add modal machine name dropdown menu
   console.log(data);
 };
 getDataProduct();
@@ -318,4 +318,19 @@ const putSelectedProduct = async (edittedProduct, selectedProductId) => {
   }
   ProductEditModalCloseBtn.click();
   getDataProduct();
+};
+
+//! Quantity Add Modal Product name dropdown
+const quantityModalProductDrop = (productNames) => {
+  quantityModalDropdownProduct.innerHTML = `<option disabled selected>Product Name</option>`;
+  for (let i of productNames) {
+    quantityModalDropdownProduct.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+};
+//! Quantity Add Modal Machine name dropdown
+const quantityModalMachineDrop = (machineNames) => {
+  quantityModalDropdownMachine.innerHTML = `<option disabled selected>Machine Name</option>`;
+  for (let i of machineNames) {
+    quantityModalDropdownMachine.innerHTML += `<option value="${i}">${i}</option>`;
+  }
 };
