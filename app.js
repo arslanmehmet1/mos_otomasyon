@@ -1,5 +1,6 @@
 //? MachineUpTableSelectors
 const upTable = document.getElementById("machineUpTable");
+const ProductUpTable = document.getElementById("ProductUpTable");
 
 //? Machine Selectors
 // const editMachine = document.querySelector(".editMachine");
@@ -22,6 +23,7 @@ const MachineEditModalCloseBtn = document.getElementById(
 const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
+// const ProductUpTable = document.querySelector(".machine-table-body");
 
 //? Quantitiy Selectors
 
@@ -35,9 +37,9 @@ const machineUpGroup = {
   2: "Marine",
   3: "Aircraft",
 };
-const productUpGroup = { 1: "Seat", 2: "Tire" };
+const productUpGroup = { 1: "Seat", 2: "Tire", 3: "new" };
 
-//! Category Table Create and Modal dropdown menu create
+//! Machine Category Table Create and Modal dropdown menu create
 machineModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
 machineEditModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
 
@@ -45,6 +47,17 @@ for (const [key, value] of Object.entries(machineUpGroup)) {
   machineModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
   machineEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
   upTable.innerHTML += `<tr>
+                            <td>${value}</td>
+                        </tr>`;
+}
+//! Product Category Table Create and Modal dropdown menu create
+// machineModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+// machineEditModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+
+for (const [key, value] of Object.entries(productUpGroup)) {
+  //   machineModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  //   machineEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  ProductUpTable.innerHTML += `<tr>
                             <td>${value}</td>
                         </tr>`;
 }
