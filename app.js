@@ -41,9 +41,18 @@ const selectedProductNameInput = document.getElementById("selectedProductName");
 
 //? Quantitiy Selectors
 
+const quantityModalDropdownMachine = document.querySelector(
+  ".quantityModalDropdownMachine"
+);
+
+const quantityModalDropdownProduct = document.querySelector(
+  ".quantityModalDropdownProduct"
+);
+
 //? AxiosUrl
 const machineUrl = "https://645e8a578d081002930218bc.mockapi.io/api/machines";
 const productUrl = "https://645e8a578d081002930218bc.mockapi.io/api/products";
+const quantityUrl = "https://6351821b3e9fa1244e60878b.mockapi.io/api/quantity";
 
 //? upperGroup
 const machineUpGroup = {
@@ -76,12 +85,22 @@ for (const [key, value] of Object.entries(productUpGroup)) {
                         </tr>`;
 }
 
+//! Quantity Modal dropdown menu create
+quantityModalDropdownMachine.innerHTML = `<option disabled selected>Machine Name</option>`;
+quantityModalDropdownProduct.innerHTML = `<option disabled selected>Product Name</option>`;
+
+//! Global variable
+// let machineNames = [];
+// let productNames = [];
+
 //!  MACHINE GET DATA FROM  MACHINE API AND CREATE MACHINE TABLE
 const getDataMachine = async () => {
   const { data } = await axios(machineUrl);
+  // machineNames = [];
   machineTable.innerHTML = ``;
   data.map((item) => {
     const { group_id, machine_name, machine_desc, id } = item;
+    // machineNames.push(item.machine_name);
     machineTable.innerHTML += `<tr>
                 <td>${machine_name}</td>
                 <td>${machine_desc}</td>
@@ -105,9 +124,11 @@ getDataMachine();
 //! PRODUCT  GET DATA FROM PRODUCT API AND CREATE MACHINE TABLE
 const getDataProduct = async () => {
   const { data } = await axios(productUrl);
+  // productNames = [];
   productTable.innerHTML = ``;
   data.map((item) => {
     const { group_id, product_name, product_desc, id } = item;
+    // productNames.push(item.product_name);
     productTable.innerHTML += `<tr>
                 <td>${product_name}</td>
                 <td>${product_desc}</td>

@@ -125,13 +125,21 @@
       <!-- Quantity Table Start -->
       <div class="result w-50 m-auto">
         <div class="text-center">
-          <p class="bg-light fs-2">Product Quantity</p>
+          <p class="bg-light fs-2">Quantity</p>
+          <p
+            type="button"
+            class="fs-5 bg-warning-subtle btn addQuantity"
+            data-bs-toggle="modal"
+            data-bs-target="#addQuantityModal"
+          >
+            Add New Quantity
+          </p>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Machine Name</th>
                 <th scope="col">Product Name</th>
-                <th scope="col">Quantitiy</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Operation</th>
               </tr>
             </thead>
@@ -423,6 +431,69 @@
       </div>
     </div>
     <!--  Product Table Edit Modal End here -->
+
+    <!--  Quantity Table Add Modal START here -->
+    <div
+      class="modal fade"
+      id="addQuantityModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Add New Quantity
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- modal body start here -->
+            <select
+              class="form-select quantityModalDropdownMachine mb-3"
+              aria-label="Default select example"
+            >
+              <option disabled>Machine Group Name</option>
+              <option value="1">One</option>
+            </select>
+            <select
+              class="form-select quantityModalDropdownProduct mb-3"
+              aria-label="Default select example"
+            >
+              <option disabled>Machine Group Name</option>
+              <option value="1">One</option>
+            </select>
+
+            <div class="input-group mt-3">
+              <span class="input-group-text">Quantity</span>
+              <input type="number" class="form-control" id="QuantityModal" />
+            </div>
+          </div>
+          <!-- modal body END here -->
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="QuantityModalCloseBtn"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary addQuantityModalBtn">
+              Add Quantity
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Quantity Table Add Modal END here -->
 
     <!-- MODALS ENDS -->
 
