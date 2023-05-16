@@ -356,6 +356,74 @@
     </div>
     <!--  Product Table Add Modal END here -->
 
+    <!--  Product Table Edit Modal Start here -->
+    <div
+      class="modal fade"
+      id="editProductModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Edit Product
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!--  Product Table Edit Modal Body Start -->
+            <select
+              class="form-select productEditModalDropdown mb-3"
+              aria-label="Default select example"
+            >
+              <option disabled>Machine Group Name</option>
+              <option value="1">One</option>
+            </select>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Text input with dropdown button"
+              placeholder="Product Name"
+              id="selectedProductName"
+              required
+            />
+            <div class="input-group mt-3">
+              <span class="input-group-text">Product Description</span>
+              <textarea
+                class="form-control"
+                aria-label="With textarea"
+                id="ProductModalEditDesc"
+              ></textarea>
+            </div>
+          </div>
+
+          <!--  Machine Table Edit Modal Body End -->
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="ProductEditModalCloseBtn"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary editProductModalBtn">
+              Edit Product
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Product Table Edit Modal End here -->
+
     <!-- MODALS ENDS -->
 
     <script

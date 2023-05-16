@@ -66,11 +66,11 @@ for (const [key, value] of Object.entries(machineUpGroup)) {
 }
 //! Product Category Table Create and Modal dropdown menu create
 productModalDropdown.innerHTML = `<option disabled selected>Product Category</option>`;
-// machineEditModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
+productEditModalDropdown.innerHTML = `<option disabled selected>Product Category</option>`;
 
 for (const [key, value] of Object.entries(productUpGroup)) {
   productModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
-  //   machineEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
+  productEditModalDropdown.innerHTML += `<option value="${value}">${value}</option>`;
   ProductUpTable.innerHTML += `<tr>
                             <td>${value}</td>
                         </tr>`;
@@ -227,6 +227,7 @@ const deleteProduct = async (id) => {
   getDataProduct();
 };
 
+//! Machine Get data for edit
 let selectedMachineId;
 const editMachine = (id, group_id, machine_name, machine_desc) => {
   selectedMachineId = id;
@@ -235,6 +236,16 @@ const editMachine = (id, group_id, machine_name, machine_desc) => {
   MachineModalEditDesc.value = machine_desc;
 };
 
+//! Product Get data for edit
+let selectedProductId;
+const editProduct = (id, group_id, product_name, product_desc) => {
+  selectedProductId = id;
+  selectedProductNameInput.value = product_name;
+  productEditModalDropdown.value = productUpGroup[group_id];
+  ProductModalEditDesc.value = product_desc;
+};
+
+//! Machine edit buton event
 editMachineModalBtn.addEventListener("click", () => {
   for (const [key, value] of Object.keys(machineUpGroup)) {
     if (machineUpGroup[key] == machineEditModalDropdown.value) {
@@ -250,6 +261,22 @@ editMachineModalBtn.addEventListener("click", () => {
   putSelectedMachine(edittedMachine, selectedMachineId);
 });
 
+//! Product edit buton event
+editProductModalBtn.addEventListener("click", () => {
+  for (const [key, value] of Object.keys(productUpGroup)) {
+    if (productUpGroup[key] == productEditModalDropdown.value) {
+      group_id = key;
+    }
+  }
+  const edittedProduct = {
+    group_id,
+    product_name: selectedProductNameInput.value,
+    product_desc: ProductModalEditDesc.value,
+  };
+  console.log(edittedProduct);
+  putSelectedProduct(edittedProduct, selectedProductId);
+});
+
 //! MACHINE PUT FUNCTION FROM API
 const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
   try {
@@ -262,12 +289,12 @@ const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
 };
 
 //! PRODUCT PUT FUNCTION FROM API
-// const putSelectedProduct = async (edittedProduct, selectedProductId) => {
-//   try {
-//     await axios.put(`${productUrl}/${selectedProductId}`, edittedProduct);
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   ProductEditModalCloseBtn.click();
-//   getDataProduct();
-// };
+const putSelectedProduct = async (edittedProduct, selectedProductId) => {
+  try {
+    await axios.put(`${productUrl}/${selectedProductId}`, edittedProduct);
+  } catch (error) {
+    console.log(error);
+  }
+  ProductEditModalCloseBtn.click();
+  getDataProduct();
+};
