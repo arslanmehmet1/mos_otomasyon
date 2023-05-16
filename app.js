@@ -11,10 +11,14 @@ const machineEditModalDropdown = document.querySelector(
   ".machineEditModalDropdown"
 );
 const addMachineModalBtn = document.querySelector(".addMachineModalBtn");
+const editMachineModalBtn = document.querySelector(".editMachineModalBtn");
 const machineModalNameInput = document.getElementById("machineModalName");
 const machineModalDescInput = document.getElementById("MachineModalDesc");
 const MachineModalEditDesc = document.getElementById("MachineModalEditDesc");
 const machineModalCloseBtn = document.getElementById("MachineModalCloseBtn");
+const MachineEditModalCloseBtn = document.getElementById(
+  "MachineEditModalCloseBtn"
+);
 const selectedMachineNameInput = document.getElementById("selectedMachineName");
 
 //? Product Selectors
@@ -75,8 +79,6 @@ const getDataMachine = async () => {
 };
 getDataMachine();
 
-let selectedMachineId;
-
 //! GET NEW MACHINE DATA FROM MODAL AND CALL CREATE FUNCTION
 addMachineModalBtn.addEventListener("click", () => {
   for (const [key, value] of Object.keys(machineUpGroup)) {
@@ -127,9 +129,36 @@ const deleteMachine = async (id) => {
   getDataMachine();
 };
 
+let selectedMachineId;
 const editMachine = (id, group_id, machine_name, machine_desc) => {
   selectedMachineId = id;
   selectedMachineNameInput.value = machine_name;
   machineEditModalDropdown.value = machineUpGroup[group_id];
   MachineModalEditDesc.value = machine_desc;
+};
+
+editMachineModalBtn.addEventListener("click", () => {
+  for (const [key, value] of Object.keys(machineUpGroup)) {
+    if (machineUpGroup[key] == machineEditModalDropdown.value) {
+      group_id = key;
+    }
+  }
+  const edittedMachine = {
+    group_id,
+    machine_name: selectedMachineNameInput.value,
+    machine_desc: MachineModalEditDesc.value,
+  };
+  console.log(edittedMachine);
+  putSelectedMachine(edittedMachine, selectedMachineId);
+});
+
+//! PUT FUNCTION FROM API
+const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
+  try {
+    await axios.put(`${machineUrl}/${selectedMachineId}`, edittedMachine);
+  } catch (error) {
+    console.log(error);
+  }
+  MachineEditModalCloseBtn.click();
+  getDataMachine();
 };
