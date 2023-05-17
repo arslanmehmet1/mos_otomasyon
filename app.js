@@ -75,7 +75,7 @@ const machineUpGroup = {
   2: "Marine",
   3: "Aircraft",
 };
-const productUpGroup = { 1: "Seat", 2: "Tire", 3: "new" };
+const productUpGroup = { 1: "Seat", 2: "Tire" };
 
 //! Machine Category Table Create and Modal dropdown menu create
 machineModalDropdown.innerHTML = `<option disabled selected>Machine Category</option>`;
