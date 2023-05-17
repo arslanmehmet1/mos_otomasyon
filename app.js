@@ -223,6 +223,7 @@ addProductModalBtn.addEventListener("click", () => {
 const postNewMachine = async (newMachine) => {
   try {
     await axios.post(machineUrl, newMachine);
+    showToast("New Machine Added Succesfully");
   } catch (error) {
     console.log(error);
   }
@@ -234,6 +235,7 @@ const postNewMachine = async (newMachine) => {
 const postNewProduct = async (newProduct) => {
   try {
     await axios.post(productUrl, newProduct);
+    showToast("New Product Added Succesfully");
   } catch (error) {
     console.log(error);
   }
@@ -317,6 +319,7 @@ editProductModalBtn.addEventListener("click", () => {
 const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
   try {
     await axios.put(`${machineUrl}/${selectedMachineId}`, edittedMachine);
+    showToast("Selected Machine Updated Succesfully");
   } catch (error) {
     console.log(error);
   }
@@ -328,6 +331,7 @@ const putSelectedMachine = async (edittedMachine, selectedMachineId) => {
 const putSelectedProduct = async (edittedProduct, selectedProductId) => {
   try {
     await axios.put(`${productUrl}/${selectedProductId}`, edittedProduct);
+    showToast("Selected Product Updated Succesfully");
   } catch (error) {
     console.log(error);
   }
@@ -406,6 +410,7 @@ addQuantityModalBtn.addEventListener("click", () => {
 const postNewQuantity = async (newQuantity) => {
   try {
     await axios.post(quantityUrl, newQuantity);
+    showToast("New Quantity Added Succesfully");
   } catch (error) {
     console.log(error);
   }
@@ -448,9 +453,20 @@ editQuantityModalBtn.addEventListener("click", () => {
 const putSelectedQuantity = async (edittedQuantity, selectedQuantityId) => {
   try {
     await axios.put(`${quantityUrl}/${selectedQuantityId}`, edittedQuantity);
+    showToast("Selected Product Updated Succesfully");
   } catch (error) {
     console.log(error);
   }
   QuantityEditModalCloseBtn.click();
   getDataQuantity();
+};
+
+const showToast = (msg) => {
+  Toastify({
+    text: `${msg}`,
+    duration: 2500,
+    gravity: "top",
+    positionLeft: false,
+    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+  }).showToast();
 };
