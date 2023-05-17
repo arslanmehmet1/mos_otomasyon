@@ -48,6 +48,21 @@ const quantityModalDropdownMachine = document.querySelector(
 const quantityModalDropdownProduct = document.querySelector(
   ".quantityModalDropdownProduct"
 );
+const quantityModalAddInput = document.getElementById("quantityModalAddInput");
+const addQuantityModalBtn = document.querySelector(".addQuantityModalBtn");
+const quantityModalCloseBtn = document.getElementById("quantityModalCloseBtn");
+const selectedQuantityInput = document.getElementById("selectedQuantityInput");
+const selectedQuantityProductName = document.querySelector(
+  ".selectedQuantityProductName"
+);
+const quantityTable = document.getElementById("quantityTable");
+const selectedQuantityMachineName = document.querySelector(
+  ".selectedQuantityMachineName"
+);
+const QuantityEditModalCloseBtn = document.getElementById(
+  "QuantityEditModalCloseBtn"
+);
+const editQuantityModalBtn = document.querySelector(".editQuantityModalBtn");
 
 //? AxiosUrl
 const machineUrl = "https://645e8a578d081002930218bc.mockapi.io/api/machines";
@@ -144,7 +159,7 @@ const getDataProduct = async () => {
                 </td>
               </tr>`;
   });
-  quantityModalProductDrop(productNames); //quantity add modal machine name dropdown menu
+  quantityModalProductDrop(productNames); //quantity add modal product name dropdown menu
   console.log(data);
 };
 getDataProduct();
@@ -320,17 +335,122 @@ const putSelectedProduct = async (edittedProduct, selectedProductId) => {
   getDataProduct();
 };
 
-//! Quantity Add Modal Product name dropdown
+//! QUANTITY  GET DATA FROM QUANTITY API AND CREATE QUANTITY TABLE
+const getDataQuantity = async () => {
+  const { data } = await axios(quantityUrl);
+  quantityTable.innerHTML = ``;
+  data.map((item) => {
+    const { machine_name, product_name, quantity, id } = item;
+    quantityTable.innerHTML += `<tr>
+                <td>${machine_name}</td>
+                <td>${product_name}</td>
+                <td>${quantity}</td>
+                <td>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                     data-bs-target="#editQuantityModal"
+                     onclick="editQuantity('${machine_name}','${product_name}',${quantity},${id},)">
+                     Edit </button>
+
+                     <button type="button" class="btn btn-danger delQuantity" onclick="deleteQuantity(${id})">
+                      Delete </button>
+                </td>
+              </tr>`;
+  });
+  console.log(data);
+};
+getDataQuantity();
+
+//! Quantity ADD/EDIT Modal Product name dropdown
 const quantityModalProductDrop = (productNames) => {
   quantityModalDropdownProduct.innerHTML = `<option disabled selected>Product Name</option>`;
+  selectedQuantityProductName.innerHTML = `<option disabled selected>Product Name</option>`;
   for (let i of productNames) {
     quantityModalDropdownProduct.innerHTML += `<option value="${i}">${i}</option>`;
+    selectedQuantityProductName.innerHTML += `<option value="${i}">${i}</option>`;
   }
 };
-//! Quantity Add Modal Machine name dropdown
+//! Quantity EDIT Modal Machine name dropdown
 const quantityModalMachineDrop = (machineNames) => {
   quantityModalDropdownMachine.innerHTML = `<option disabled selected>Machine Name</option>`;
+  selectedQuantityMachineName.innerHTML = `<option disabled selected>Machine Name</option>`;
   for (let i of machineNames) {
     quantityModalDropdownMachine.innerHTML += `<option value="${i}">${i}</option>`;
+    selectedQuantityMachineName.innerHTML += `<option value="${i}">${i}</option>`;
   }
+};
+
+//! GET NEW QUANTITY DATA FROM ADD MODAL AND CALL CREATE FUNCTION
+addQuantityModalBtn.addEventListener("click", () => {
+  const newQuantity = {
+    machine_name: quantityModalDropdownMachine.value,
+    product_name: quantityModalDropdownProduct.value,
+    quantity: quantityModalAddInput.value,
+  };
+
+  if (quantityModalAddInput.value == "") {
+    alert("Quantity is required");
+  } else if (quantityModalDropdownMachine.value == "Machine Name") {
+    alert("Machine Name is not selected");
+  } else if (quantityModalDropdownProduct.value == "Product Name") {
+    alert("Product Name is not selected");
+  } else {
+    console.log(newQuantity);
+    postNewQuantity(newQuantity);
+    quantityModalDropdownMachine.value = "Machine Name";
+    quantityModalDropdownProduct.value = "Product Name";
+    quantityModalAddInput.value = "";
+  }
+});
+
+//! QUANTITY CREATE FUNCTION FROM API
+const postNewQuantity = async (newQuantity) => {
+  try {
+    await axios.post(quantityUrl, newQuantity);
+  } catch (error) {
+    console.log(error);
+  }
+  quantityModalCloseBtn.click();
+  getDataQuantity();
+};
+
+//! QUANTITY DELETE FUNCTION FROM API
+const deleteQuantity = async (id) => {
+  try {
+    await axios.delete(`${quantityUrl}/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  getDataQuantity();
+};
+
+//! Quantity Get data for edit
+let selectedQuantityId;
+const editQuantity = (machine_name, product_name, quantity, id) => {
+  selectedQuantityId = id;
+  selectedQuantityMachineName.value = machine_name;
+  selectedQuantityProductName.value = product_name;
+  selectedQuantityInput.value = quantity;
+};
+
+//! Quantity edit buton event
+editQuantityModalBtn.addEventListener("click", () => {
+  const edittedQuantity = {
+    machine_name: selectedQuantityMachineName.value,
+    product_name: selectedQuantityProductName.value,
+    quantity: selectedQuantityInput.value,
+  };
+
+  putSelectedQuantity(edittedQuantity, selectedQuantityId);
+});
+
+//! QUANTİTY PUT FUNCTION FROM API
+const putSelectedQuantity = async (edittedQuantity, selectedQuantityId) => {
+  try {
+    await axios.put(`${quantityUrl}/${selectedQuantityId}`, edittedQuantity);
+  } catch (error) {
+    console.log(error);
+  }
+  QuantityEditModalCloseBtn.click();
+  getDataQuantity();
 };

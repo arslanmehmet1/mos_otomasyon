@@ -84,7 +84,7 @@
               <tr>
                 <th scope="col">Machine Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">Group Name</th>
+                <th scope="col">Category</th>
                 <th scope="col">Operation</th>
               </tr>
             </thead>
@@ -111,7 +111,7 @@
               <tr>
                 <th scope="col">Products Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">Group Name</th>
+                <th scope="col">Category</th>
                 <th scope="col">Operation</th>
               </tr>
             </thead>
@@ -120,7 +120,6 @@
         </div>
         <!-- Product Table end -->
       </div>
-      <!-- Machine and Product Table end here -->
 
       <!-- Quantity Table Start -->
       <div class="result w-50 m-auto">
@@ -143,18 +142,7 @@
                 <th scope="col">Operation</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                  <button type="button" class="btn btn-secondary">
-                    Change Quantity
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="quantityTable"></tbody>
           </table>
         </div>
       </div>
@@ -472,7 +460,11 @@
 
             <div class="input-group mt-3">
               <span class="input-group-text">Quantity</span>
-              <input type="number" class="form-control" id="QuantityModal" />
+              <input
+                type="number"
+                class="form-control"
+                id="quantityModalAddInput"
+              />
             </div>
           </div>
           <!-- modal body END here -->
@@ -482,7 +474,7 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              id="QuantityModalCloseBtn"
+              id="quantityModalCloseBtn"
             >
               Close
             </button>
@@ -494,6 +486,73 @@
       </div>
     </div>
     <!--  Quantity Table Add Modal END here -->
+
+    <!--  Quantity Table Edit Modal Start here -->
+    <div
+      class="modal fade"
+      id="editQuantityModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Change quantity
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!--  Quantity Table Edit Modal Body Start -->
+            <select
+              class="form-select selectedQuantityMachineName mb-3"
+              aria-label="Default select example"
+            >
+              <option disabled>Machine Group Name</option>
+              <option value="1">One</option>
+            </select>
+            <select
+              class="form-select selectedQuantityProductName mb-3"
+              aria-label="Default select example"
+            >
+              <option disabled>Machine Group Name</option>
+              <option value="1">One</option>
+            </select>
+            <div class="input-group mt-3">
+              <span class="input-group-text">Quantity</span>
+              <input
+                type="number"
+                class="form-control"
+                id="selectedQuantityInput"
+              />
+            </div>
+          </div>
+
+          <!--  Quantity Table Edit Modal Body End -->
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="QuantityEditModalCloseBtn"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary editQuantityModalBtn">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Quantity Table Edit Modal End here -->
 
     <!-- MODALS ENDS -->
 
